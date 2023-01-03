@@ -33,6 +33,7 @@ button {
   background-color: white;
   border: none;
   font-size: 1.2rem;
+  border-radius: 0 16px 16px 0;
 }
 
 input:focus {
@@ -45,15 +46,35 @@ button {
 
 input {
   font-weight: bold;
+  border-radius: 16px 0 0 16px;
 }
 
 .poke-container {
   display: flex;
+  justify-content: center;
   width: 100%;
   flex-wrap: wrap;
-  padding: 3rem;
+  padding: 0.5rem;
 }
 
 .poke-box {
   width: 300px;
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.poke-box img {
+  width: 85%;
+  margin: 10px 0;
+}
+
+.poke-box h4 {
+  font-size: 1.4rem;
+  margin: 5px auto;
+}
+
+.poke-box p {
+  margin: 5px auto;
 }
