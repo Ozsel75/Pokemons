@@ -38,4 +38,21 @@ const createPokemonBox = (pokemon) => {
   const id = pokemon.id.toString().padStart(3, "0"); //padStart converts 1  to 001
   const weight = pokemon.weight;
   const type = pokemon.types[0].type.name;
+  const color = colors[type];
+  console.log(name);
+
+  const pokemonEl = document.createElement("div");
+  pokemonEl.classList.add("poke-box");
+  pokemonEl.style.backgroundColor = `${color}`;
+
+  pokemonEl.innerHTML = `
+  <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png" alt="${name} image">
+  <h4 class="poke-name">${name}</h4>
+  <p class="poke-id">${id}</p>
+  <p class="poke-weight">${weight} </p>
+  <p class="poke-type">Type: ${type} </p>
+ 
+  `;
+
+  pokeContainer.appendChild(pokemonEl);
 };
