@@ -56,3 +56,10 @@ const createPokemonBox = (pokemon) => {
 
   pokeContainer.appendChild(pokemonEl);
 };
+
+initPokemon();
+
+searchInput.addEventListener("input", function (e) {
+  const search = searchInput.value;
+  console.log(search);
+});
