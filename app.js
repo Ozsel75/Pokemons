@@ -1,7 +1,7 @@
 const searchInput = document.querySelector("#poke-input");
 const searchBtn = document.querySelector(".btn-search");
 const pokeContainer = document.querySelector(".poke-container");
-const pokeCount = 151;
+
 const colors = {
   fire: "#FDDFDF",
   grass: "#DEFDE0",
@@ -20,6 +20,8 @@ const colors = {
   ice: "#e0f5ff ",
 };
 
+const pokeCount = 151;
+
 const initPokemon = async () => {
   for (let i = 1; i <= pokeCount; i++) {
     await getPokemon(i);
@@ -27,39 +29,48 @@ const initPokemon = async () => {
 };
 
 const getPokemon = async (id) => {
-  let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+  let url = ` https://pokeapi.co/api/v2/pokemon/${id}`;
   let res = await fetch(url);
   let data = await res.json();
   createPokemonBox(data);
 };
 
-const createPokemonBox = (pokemon) => {
-  const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
-  const id = pokemon.id.toString().padStart(3, "0"); //padStart converts 1  to 001
-  const weight = pokemon.weight;
+function createPokemonBox(pokemon) {
+  const { name, weight } = pokemon;
+  const id = pokemon.id.toString().padStart(3, "0");
   const type = pokemon.types[0].type.name;
-  const color = colors[type];
-  console.log(name);
 
   const pokemonEl = document.createElement("div");
   pokemonEl.classList.add("poke-box");
-  pokemonEl.style.backgroundColor = `${color}`;
-
-  pokemonEl.innerHTML = `
-  <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png" alt="${name} image">
-  <h4 class="poke-name">${name}</h4>
-  <p class="poke-id">${id}</p>
-  <p class="poke-weight">${weight} </p>
-  <p class="poke-type">Type: ${type} </p>
- 
-  `;
-
+  pokemonEl.style.backgroundColor = colors[type];
+  pokemonEl.innerHTML = buildHtmlOfPokemon(id, name, weight, type);
   pokeContainer.appendChild(pokemonEl);
-};
+}
+
+function buildHtmlOfPokemon(id, name, weight, type) {
+  return `
+    <img
+      class="poke-img"
+      src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${id}.png"
+      alt="${name} Pokemon"
+    />
+    <h3 class="poke-name">${name}</h3>
+    <p class="poke-id"># ${id}</p>
+    <p class="poke-weight">${weight} kg</p>
+    <p class="poke-type">Type : ${type}</p>
+    `;
+}
 
 initPokemon();
-
 searchInput.addEventListener("input", function (e) {
-  const search = searchInput.value;
-  console.log(search);
+  const pokeNames = document.querySelectorAll(".poke-name");
+  const search = searchInput.value.toLowerCase();
+
+  pokeNames.forEach((pokeName) => {
+    pokeName.parentElement.style.display = "block";
+
+    if (!pokeName.innerHTML.toLowerCase().includes(search)) {
+      pokeName.parentElement.style.display = "none";
+    }
+  });
 });
